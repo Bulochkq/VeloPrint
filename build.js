@@ -84,8 +84,8 @@ if (fs.existsSync(templateFile)) {
     .replace(/>/g, '&gt;');
     
   let compiledHtml = templateHtml
-    .replace(/\{\{BOOKMARKLET_URL\}\}/g, encodedBookmarklet)
-    .replace(/\{\{RAW_SOURCE_CODE\}\}/g, escapedRawCode);
+    .replace(/\{\{BOOKMARKLET_URL\}\}/g, () => encodedBookmarklet)
+    .replace(/\{\{RAW_SOURCE_CODE\}\}/g, () => escapedRawCode);
     
   fs.writeFileSync(indexFile, compiledHtml, 'utf8');
   console.log(`✓ Compiled installer saved to: ${indexFile}`);

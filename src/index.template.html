@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sk">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Velocity Print Bookmarklet — Easy Installation</title>
+  <title>Tlačový Asistent Servisu Velocity</title>
   
   <!-- Modern Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   
   <style>
     :root {
@@ -87,7 +87,7 @@
       margin: 0 auto;
     }
 
-    /* Hero Section (Drag & Drop Installer) */
+    /* Main Installation Box */
     .installer-box {
       background: rgba(255, 255, 255, 0.01);
       border: 1px solid var(--card-border);
@@ -107,7 +107,7 @@
       z-index: 1;
     }
 
-    /* The Bookmarklet Button */
+    /* Draggable Bookmarklet Button */
     .bookmarklet-btn-wrapper {
       margin: 30px 0 20px 0;
       display: inline-block;
@@ -156,6 +156,7 @@
       align-items: center;
       justify-content: center;
       gap: 6px;
+      user-select: none;
     }
 
     .drag-hint svg {
@@ -168,12 +169,14 @@
     .animation-container {
       margin: 40px auto 20px auto;
       max-width: 520px;
+      height: 212px;
       border-radius: 12px;
       overflow: hidden;
       background: #100d1a;
       border: 1px solid rgba(255, 255, 255, 0.08);
       box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
       text-align: left;
+      position: relative;
     }
 
     .browser-header {
@@ -183,6 +186,7 @@
       display: flex;
       align-items: center;
       gap: 15px;
+      height: 40px;
     }
 
     .window-controls {
@@ -229,6 +233,7 @@
       font-size: 0.75rem;
       height: 32px;
       position: relative;
+      z-index: 1;
     }
 
     .bookmark-item {
@@ -237,9 +242,10 @@
       align-items: center;
       gap: 4px;
       opacity: 0.7;
+      user-select: none;
     }
 
-    /* Target area on Bookmarks Bar */
+    /* Target Slot on Bookmarks Bar */
     .bookmark-target-slot {
       border: 1px dashed rgba(138, 92, 245, 0.5);
       border-radius: 4px;
@@ -251,12 +257,14 @@
       align-items: center;
       height: 20px;
       position: absolute;
-      left: 170px;
-      width: 160px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 180px;
       justify-content: center;
       box-sizing: border-box;
       overflow: hidden;
       animation: animateSlot 8s infinite;
+      z-index: 2;
     }
 
     .bookmark-target-slot .slot-text {
@@ -275,33 +283,31 @@
       gap: 4px;
       font-size: 0.7rem;
       opacity: 0;
-      transform: scale(0.9);
+      transform: scale(0.95);
       animation: showAddedBookmark 8s infinite;
     }
 
     .mockup-body {
       height: 140px;
-      position: relative;
       background: #0f0c1b;
       display: flex;
       justify-content: center;
       align-items: center;
-      overflow: hidden;
-    }
-
-    /* Placeholder button in Body */
-    .mock-button-placeholder {
-      padding: 10px 20px;
-      border-radius: 30px;
-      background: rgba(138, 92, 245, 0.05);
-      border: 1px dashed rgba(138, 92, 245, 0.2);
-      color: rgba(255, 255, 255, 0.15);
-      font-weight: 700;
-      font-size: 0.9rem;
       user-select: none;
     }
 
-    /* Animated Button that gets dragged */
+    /* Static Placeholder in Body */
+    .mock-button-placeholder {
+      padding: 8px 18px;
+      border-radius: 30px;
+      background: rgba(138, 92, 245, 0.03);
+      border: 1px dashed rgba(138, 92, 245, 0.15);
+      color: rgba(255, 255, 255, 0.12);
+      font-weight: 700;
+      font-size: 0.8rem;
+    }
+
+    /* Animated Button that gets dragged (Direct child of container to avoid cutoff) */
     .animated-drag-button {
       position: absolute;
       padding: 8px 18px;
@@ -315,16 +321,21 @@
       user-select: none;
       z-index: 10;
       pointer-events: none;
+      left: 50%;
+      top: 142px;
+      transform: translate(-50%, -50%);
       animation: dragButton 8s infinite;
     }
 
-    /* Animated Pointer Cursor */
+    /* Animated Pointer Cursor (Direct child, z-indexed above bookmarks bar and button) */
     .animated-cursor {
       position: absolute;
       z-index: 20;
       pointer-events: none;
       width: 20px;
       height: 20px;
+      margin-left: -4px; /* Offset to align top-left arrow tip precisely */
+      margin-top: -3px;
       animation: moveCursor 8s infinite;
     }
 
@@ -332,22 +343,22 @@
       filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
     }
 
-    /* Click ripple animation helper */
+    /* Click ripple animation centered on cursor tip */
     .cursor-click-ripple {
       position: absolute;
       border: 2px solid var(--primary);
       border-radius: 50%;
       width: 30px;
       height: 30px;
-      left: -5px;
-      top: -5px;
+      left: -15px;
+      top: -15px;
       transform: scale(0);
       opacity: 0;
       animation: clickRipple 8s infinite;
       pointer-events: none;
     }
 
-    /* Instruction Steps styling */
+    /* Steps Cards */
     .instruction-steps {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -395,98 +406,6 @@
       color: var(--text-muted);
     }
 
-    /* Code Section */
-    .code-section {
-      background: rgba(255, 255, 255, 0.005);
-      border: 1px solid var(--card-border);
-      border-radius: 24px;
-      padding: 30px 40px;
-      animation: fadeInUp 0.8s ease-out;
-    }
-
-    .tabs-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid var(--card-border);
-      margin-bottom: 25px;
-      padding-bottom: 15px;
-      flex-wrap: wrap;
-      gap: 15px;
-    }
-
-    .tabs-btn-group {
-      display: flex;
-      gap: 10px;
-    }
-
-    .tab-btn {
-      background: transparent;
-      border: none;
-      color: var(--text-muted);
-      padding: 8px 16px;
-      font-size: 0.9rem;
-      font-weight: 600;
-      cursor: pointer;
-      border-radius: 8px;
-      transition: all 0.2s;
-    }
-
-    .tab-btn.active {
-      background: rgba(138, 92, 245, 0.12);
-      color: #fff;
-      border: 1px solid rgba(138, 92, 245, 0.25);
-    }
-
-    .copy-btn {
-      background: rgba(255, 255, 255, 0.04);
-      color: white;
-      border: 1px solid var(--card-border);
-      padding: 8px 16px;
-      border-radius: 8px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      transition: all 0.2s;
-    }
-
-    .copy-btn:hover {
-      background: rgba(255, 255, 255, 0.08);
-      border-color: rgba(255, 255, 255, 0.18);
-    }
-
-    .code-container {
-      position: relative;
-      border-radius: 16px;
-      overflow: hidden;
-      border: 1px solid var(--card-border);
-      background: #050408;
-    }
-
-    pre {
-      padding: 24px;
-      overflow-x: auto;
-      margin: 0;
-    }
-
-    code {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.85rem;
-      color: #e2e8f0;
-      display: block;
-    }
-
-    .tab-content {
-      display: none;
-    }
-
-    .tab-content.active {
-      display: block;
-    }
-
     /* Keyframe Animations */
     @keyframes fadeInDown {
       from {
@@ -513,32 +432,49 @@
     /* Visual Tutorial dragging animation keyframes */
     @keyframes moveCursor {
       0% {
-        transform: translate(120px, 90px);
-        opacity: 1;
+        left: 75%;
+        top: 180px;
+        transform: scale(1);
       }
-      18% { /* Move to button */
-        transform: translate(0px, 35px);
+      18% { /* Move exactly to button center */
+        left: 50%;
+        top: 142px;
+        transform: scale(1);
       }
-      22% { /* Click press */
-        transform: translate(0px, 35px) scale(0.8);
+      22% { /* Press / Click down */
+        left: 50%;
+        top: 142px;
+        transform: scale(0.8);
       }
-      26% { /* Grab */
-        transform: translate(0px, 35px);
+      26% { /* Hold & Start drag */
+        left: 50%;
+        top: 142px;
+        transform: scale(1);
       }
-      54% { /* Drag up to bookmarks target */
-        transform: translate(-30px, -76px);
+      54% { /* Drag vertically up to bookmarks slot */
+        left: 50%;
+        top: 56px;
+        transform: scale(1);
       }
-      58% { /* Click release / drop */
-        transform: translate(-30px, -76px) scale(0.8);
+      58% { /* Click release / Drop */
+        left: 50%;
+        top: 56px;
+        transform: scale(0.8);
       }
-      62% { /* Drop finished */
-        transform: translate(-30px, -76px);
+      62% { /* Release finished */
+        left: 50%;
+        top: 56px;
+        transform: scale(1);
       }
-      75% { /* Move away */
-        transform: translate(120px, 90px);
+      75% { /* Move back to start */
+        left: 75%;
+        top: 180px;
+        transform: scale(1);
       }
       100% {
-        transform: translate(120px, 90px);
+        left: 75%;
+        top: 180px;
+        transform: scale(1);
       }
     }
 
@@ -548,11 +484,11 @@
         opacity: 0;
       }
       22% {
-        transform: scale(0.5);
+        transform: scale(0.2);
         opacity: 1;
       }
       25% {
-        transform: scale(2.2);
+        transform: scale(2.0);
         opacity: 0;
       }
       26%, 57% {
@@ -560,11 +496,11 @@
         opacity: 0;
       }
       58% {
-        transform: scale(0.5);
+        transform: scale(0.2);
         opacity: 1;
       }
       61% {
-        transform: scale(2.2);
+        transform: scale(2.0);
         opacity: 0;
       }
       62%, 100% {
@@ -575,33 +511,47 @@
 
     @keyframes dragButton {
       0%, 21% {
-        transform: translate(0, 0);
+        left: 50%;
+        top: 142px;
+        transform: translate(-50%, -50%);
         opacity: 1;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
       }
       22% {
-        transform: translate(0, 0) scale(0.96);
+        left: 50%;
+        top: 142px;
+        transform: translate(-50%, -50%) scale(0.96);
         opacity: 1;
       }
       26% {
-        transform: translate(0, 0) scale(1);
+        left: 50%;
+        top: 142px;
+        transform: translate(-50%, -50%) scale(1);
         box-shadow: 0 10px 20px rgba(138, 92, 245, 0.4);
         opacity: 0.95;
       }
       54% {
-        transform: translate(-30px, -111px) scale(0.65);
+        left: 50%;
+        top: 56px;
+        transform: translate(-50%, -50%) scale(0.65);
         opacity: 0.15;
       }
       58%, 61% {
-        transform: translate(-30px, -111px) scale(0.65);
+        left: 50%;
+        top: 56px;
+        transform: translate(-50%, -50%) scale(0.65);
         opacity: 0;
       }
       62% {
-        transform: translate(0, 0);
+        left: 50%;
+        top: 142px;
+        transform: translate(-50%, -50%);
         opacity: 0;
       }
       68%, 100% {
-        transform: translate(0, 0);
+        left: 50%;
+        top: 142px;
+        transform: translate(-50%, -50%);
         opacity: 1;
       }
     }
@@ -649,7 +599,7 @@
         transform: scale(1);
       }
       90%, 100% {
-        opacity: 0;
+        opacity: 0.85;
         transform: scale(0.85);
       }
     }
@@ -658,9 +608,6 @@
       h1 {
         font-size: 2.2rem;
       }
-      .code-section {
-        padding: 20px;
-      }
     }
   </style>
 </head>
@@ -668,20 +615,20 @@
 
   <div class="container">
     <header>
-      <span class="badge">Velocity CRM Tool</span>
-      <h1>Service Print Assistant</h1>
-      <p>A smart browser bookmarklet that formats raw CRM order pages into beautifully structured, client-ready PDF receipts in one click.</p>
+      <span class="badge">Velocity CRM Nástroj</span>
+      <h1>Tlačový asistent servisu</h1>
+      <p>Šikovný bookmarklet do prehliadača, ktorý naformátuje stránku servisu v CRM na čisté potvrdenie pripravené na tlač jedným kliknutím.</p>
     </header>
 
     <!-- Main Installation Panel -->
     <section class="installer-box">
       <div class="installer-content">
-        <h2>Install by Dragging</h2>
-        <p style="color: var(--text-muted); margin-bottom: 20px;">Drag the button below and drop it straight onto your browser's Bookmarks Bar.</p>
+        <h2>Inštalácia pretiahnutím</h2>
+        <p style="color: var(--text-muted); margin-bottom: 20px;">Chyťte tlačidlo nižšie myšou a presuňte ho priamo na lištu záložiek vo vašom prehliadači.</p>
         
         <!-- Draggable bookmarklet link -->
         <div class="bookmarklet-btn-wrapper">
-          <a href="{{BOOKMARKLET_URL}}" class="bookmarklet-btn" title="Drag to bookmarks bar">
+          <a href="{{BOOKMARKLET_URL}}" class="bookmarklet-btn" title="Pretiahnite na lištu záložiek">
             <svg viewBox="0 0 24 24">
               <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
             </svg>
@@ -689,12 +636,13 @@
           </a>
           <div class="drag-hint">
             <svg viewBox="0 0 24 24"><path d="M8 5a2 2 0 100 4 2 2 0 000-4zm8 0a2 2 0 100 4 2 2 0 000-4zm-8 6a2 2 0 100 4 2 2 0 000-4zm8 0a2 2 0 100 4 2 2 0 000-4zm-8 6a2 2 0 100 4 2 2 0 000-4zm8 0a2 2 0 100 4 2 2 0 000-4z"/></svg>
-            Drag me up!
+            Presuňte ma hore!
           </div>
         </div>
 
         <!-- Drag & Drop Visual Tutorial Mockup -->
         <div class="animation-container">
+          <!-- Browser Mockup Header -->
           <div class="browser-header">
             <div class="window-controls">
               <span class="control-dot red"></span>
@@ -706,117 +654,56 @@
               velocity.sk/crm/order-details/4089
             </div>
           </div>
+          <!-- Bookmarks Bar -->
           <div class="bookmarks-bar">
             <span class="bookmark-item">📁 CRM</span>
-            <span class="bookmark-item">📁 Analytics</span>
+            <span class="bookmark-item">📁 Prehľady</span>
             
             <!-- Animated Target Box -->
             <div class="bookmark-target-slot">
-              <span class="slot-text">➕ Drop Here</span>
+              <span class="slot-text">➕ Pustite tu</span>
               <span class="added-bookmark">⭐ Tlač Servisu Velocity</span>
             </div>
           </div>
+          
+          <!-- Mockup Body Area -->
           <div class="mockup-body">
             <div class="mock-button-placeholder">🖨️ Tlač Servisu Velocity</div>
-            
-            <!-- Absolute Animated Elements -->
-            <div class="animated-drag-button">🖨️ Tlač Servisu Velocity</div>
-            
-            <div class="animated-cursor">
-              <div class="cursor-click-ripple"></div>
-              <!-- Cursor Arrow SVG -->
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M4.5 3V19.5L9.75 14.25H16.5L4.5 3Z" fill="white" stroke="#222" stroke-width="2" stroke-linejoin="round"/>
-              </svg>
-            </div>
+          </div>
+
+          <!-- Absolute Animated Elements (Children of .animation-container to prevent bar cutoff) -->
+          <div class="animated-drag-button">🖨️ Tlač Servisu Velocity</div>
+          
+          <div class="animated-cursor">
+            <div class="cursor-click-ripple"></div>
+            <!-- Cursor Arrow SVG -->
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M4.5 3V19.5L9.75 14.25H16.5L4.5 3Z" fill="white" stroke="#222" stroke-width="2" stroke-linejoin="round"/>
+            </svg>
           </div>
         </div>
 
-        <!-- Clarified Steps -->
+        <!-- Instruction Steps -->
         <div class="instruction-steps">
           <div class="step-card">
             <div class="step-num">1</div>
-            <h3>Show Bookmarks Bar</h3>
-            <p>Ensure your browser's bookmarks bar is visible. Toggle with <code>Ctrl+Shift+B</code> (Windows) or <code>Cmd+Shift+B</code> (Mac).</p>
+            <h3>Aktivujte lištu záložiek</h3>
+            <p>Uistite sa, že máte v prehliadači zapnutú lištu záložiek (Bookmarks Bar). Ak nie, stlačte skratku <code>Ctrl+Shift+B</code> (Windows) alebo <code>Cmd+Shift+B</code> (Mac).</p>
           </div>
           <div class="step-card">
             <div class="step-num">2</div>
-            <h3>Drag & Drop</h3>
-            <p>Drag the purple button above to your bookmarks bar. You can drop it anywhere on the bar.</p>
+            <h3>Pretiahnite tlačidlo</h3>
+            <p>Kliknite myšou na fialové tlačidlo vyššie, podržte tlačidlo myši stlačené, presuňte ho na vašu lištu záložiek a pustite ho.</p>
           </div>
           <div class="step-card">
             <div class="step-num">3</div>
-            <h3>Open CRM & Click</h3>
-            <p>Go to your CRM service card detail and click the new <strong>🖨️ Tlač Servisu Velocity</strong> bookmark. The print dialog will open.</p>
+            <h3>Otvorte CRM a kliknite</h3>
+            <p>Prejdite v CRM na detail akéhokoľvek servisného lístka a kliknite na novú záložku <strong>🖨️ Tlač Servisu Velocity</strong> na vašej lište. Automaticky sa spustí dialóg tlače.</p>
           </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Source Code View Section -->
-    <section class="code-section">
-      <div class="tabs-header">
-        <div class="tabs-btn-group">
-          <button class="tab-btn active" onclick="switchTab('minified')">Minified Code (Bookmarklet)</button>
-          <button class="tab-btn" onclick="switchTab('source')">Source Code (bookmarklet.js)</button>
-        </div>
-        <button class="copy-btn" id="copy-btn" onclick="copyCode()">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-          Copy Code
-        </button>
-      </div>
-
-      <div class="code-container">
-        <!-- Minified Code -->
-        <div id="minified-tab" class="tab-content active">
-          <pre><code>{{BOOKMARKLET_URL}}</code></pre>
-        </div>
-        
-        <!-- Source Code -->
-        <div id="source-tab" class="tab-content">
-          <pre><code id="source-code-block">{{RAW_SOURCE_CODE}}</code></pre>
         </div>
       </div>
     </section>
   </div>
 
-  <script>
-    // Tab switching logic
-    function switchTab(tabId) {
-      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-      document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-      
-      if (tabId === 'minified') {
-        document.querySelector('.tab-btn:nth-child(1)').classList.add('active');
-        document.getElementById('minified-tab').classList.add('active');
-      } else {
-        document.querySelector('.tab-btn:nth-child(2)').classList.add('active');
-        document.getElementById('source-tab').classList.add('active');
-      }
-    }
-
-    // Copy to clipboard logic
-    function copyCode() {
-      const activeTab = document.querySelector('.tab-content.active');
-      const codeText = activeTab.querySelector('code').innerText;
-      
-      navigator.clipboard.writeText(codeText).then(() => {
-        const copyBtn = document.getElementById('copy-btn');
-        const originalText = copyBtn.innerHTML;
-        copyBtn.innerHTML = `
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-          Copied!
-        `;
-        copyBtn.style.borderColor = 'var(--success)';
-        copyBtn.style.color = 'var(--success)';
-        
-        setTimeout(() => {
-          copyBtn.innerHTML = originalText;
-          copyBtn.style.borderColor = 'var(--card-border)';
-          copyBtn.style.color = 'white';
-        }, 2000);
-      });
-    }
-  </script>
 </body>
 </html>
