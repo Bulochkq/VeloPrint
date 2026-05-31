@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="sk">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Velocity Print Bookmarklet — Rýchly Tlačový Nástroj</title>
+  <title>Velocity Print Bookmarklet — Easy Installation</title>
   
   <!-- Modern Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,17 +12,17 @@
   
   <style>
     :root {
-      --primary: #6c4b91;
+      --primary: #8a5cf5;
       --primary-light: #f0eaf5;
-      --primary-dark: #493066;
+      --primary-dark: #5833b3;
       --accent: #ff4757;
       --success: #2ed573;
-      --bg: #0b0813;
-      --card-bg: rgba(255, 255, 255, 0.03);
-      --card-border: rgba(255, 255, 255, 0.08);
+      --bg: #09070f;
+      --card-bg: rgba(255, 255, 255, 0.02);
+      --card-border: rgba(255, 255, 255, 0.07);
       --text: #f1f2f6;
       --text-muted: #a4b0be;
-      --glass-glow: 0 8px 32px 0 rgba(108, 75, 145, 0.2);
+      --glass-glow: 0 8px 32px 0 rgba(138, 92, 245, 0.15);
     }
 
     * {
@@ -38,53 +38,42 @@
       line-height: 1.6;
       overflow-x: hidden;
       background-image: 
-        radial-gradient(circle at 10% 20%, rgba(108, 75, 145, 0.15) 0%, transparent 40%),
-        radial-gradient(circle at 90% 80%, rgba(255, 71, 87, 0.08) 0%, transparent 45%);
+        radial-gradient(circle at 10% 20%, rgba(138, 92, 245, 0.12) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(255, 71, 87, 0.05) 0%, transparent 45%);
       background-attachment: fixed;
     }
 
     .container {
-      max-width: 1200px;
+      max-width: 900px;
       margin: 0 auto;
-      padding: 40px 20px;
+      padding: 60px 20px;
     }
 
     /* Header styling */
     header {
       text-align: center;
-      margin-bottom: 60px;
+      margin-bottom: 50px;
       animation: fadeInDown 0.8s ease-out;
     }
 
-    .logo-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 15px;
-      margin-bottom: 20px;
-    }
-
-    .logo-img {
-      height: 40px;
-      filter: drop-shadow(0 0 8px rgba(108, 75, 145, 0.5));
-    }
-
     .badge {
-      background: linear-gradient(135deg, var(--accent), #ff6b81);
+      background: linear-gradient(135deg, var(--primary), #b08eff);
       color: white;
-      padding: 4px 12px;
+      padding: 5px 14px;
       border-radius: 20px;
       font-size: 0.8rem;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 1px;
-      box-shadow: 0 4px 15px rgba(255, 71, 87, 0.4);
+      box-shadow: 0 4px 15px rgba(138, 92, 245, 0.3);
+      display: inline-block;
+      margin-bottom: 15px;
     }
 
     h1 {
       font-size: 2.8rem;
       font-weight: 800;
-      background: linear-gradient(135deg, #ffffff 30%, #d8cedf 100%);
+      background: linear-gradient(135deg, #ffffff 40%, #c3b4d6 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       margin-bottom: 15px;
@@ -100,31 +89,17 @@
 
     /* Hero Section (Drag & Drop Installer) */
     .installer-box {
-      background: rgba(255, 255, 255, 0.02);
+      background: rgba(255, 255, 255, 0.01);
       border: 1px solid var(--card-border);
       border-radius: 24px;
-      padding: 50px 30px;
+      padding: 40px 30px;
       text-align: center;
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(12px);
       box-shadow: var(--glass-glow);
-      margin-bottom: 60px;
+      margin-bottom: 50px;
       position: relative;
       overflow: hidden;
       animation: fadeInUp 0.8s ease-out;
-    }
-
-    .installer-box::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: conic-gradient(from 180deg at 50% 50%, transparent 0deg, var(--primary) 180deg, transparent 360deg);
-      animation: rotateGlow 12s linear infinite;
-      opacity: 0.07;
-      pointer-events: none;
-      z-index: 0;
     }
 
     .installer-content {
@@ -133,6 +108,12 @@
     }
 
     /* The Bookmarklet Button */
+    .bookmarklet-btn-wrapper {
+      margin: 30px 0 20px 0;
+      display: inline-block;
+      position: relative;
+    }
+
     .bookmarklet-btn {
       display: inline-flex;
       align-items: center;
@@ -142,19 +123,18 @@
       text-decoration: none;
       font-size: 1.25rem;
       font-weight: 700;
-      padding: 18px 36px;
+      padding: 16px 36px;
       border-radius: 50px;
       border: 1px solid rgba(255, 255, 255, 0.2);
-      box-shadow: 0 8px 25px rgba(108, 75, 145, 0.4), inset 0 2px 2px rgba(255, 255, 255, 0.2);
+      box-shadow: 0 8px 25px rgba(138, 92, 245, 0.4), inset 0 2px 2px rgba(255, 255, 255, 0.2);
       cursor: grab;
       transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       user-select: none;
-      margin: 25px 0;
     }
 
     .bookmarklet-btn:hover {
-      transform: translateY(-3px) scale(1.03);
-      box-shadow: 0 15px 35px rgba(108, 75, 145, 0.6), inset 0 2px 2px rgba(255, 255, 255, 0.4);
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 15px 35px rgba(138, 92, 245, 0.5), inset 0 2px 2px rgba(255, 255, 255, 0.3);
     }
 
     .bookmarklet-btn:active {
@@ -163,21 +143,221 @@
     }
 
     .bookmarklet-btn svg {
-      width: 24px;
-      height: 24px;
+      width: 22px;
+      height: 22px;
       fill: currentColor;
     }
 
+    .drag-hint {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-top: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .drag-hint svg {
+      width: 16px;
+      height: 16px;
+      fill: currentColor;
+    }
+
+    /* Animated Browser Mockup representing Drag & Drop */
+    .animation-container {
+      margin: 40px auto 20px auto;
+      max-width: 520px;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #100d1a;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+      text-align: left;
+    }
+
+    .browser-header {
+      background: #171326;
+      padding: 10px 15px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .window-controls {
+      display: flex;
+      gap: 6px;
+    }
+
+    .control-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #444;
+    }
+    .control-dot.red { background: #ff5f56; }
+    .control-dot.yellow { background: #ffbd2e; }
+    .control-dot.green { background: #27c93f; }
+
+    .address-bar {
+      flex-grow: 1;
+      background: #09070f;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      padding: 4px 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      user-select: none;
+    }
+
+    .address-bar svg {
+      width: 10px;
+      height: 10px;
+      fill: #4b6584;
+    }
+
+    .bookmarks-bar {
+      background: #1c182e;
+      padding: 6px 15px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.75rem;
+      height: 32px;
+      position: relative;
+    }
+
+    .bookmark-item {
+      color: #cbd5e1;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      opacity: 0.7;
+    }
+
+    /* Target area on Bookmarks Bar */
+    .bookmark-target-slot {
+      border: 1px dashed rgba(138, 92, 245, 0.5);
+      border-radius: 4px;
+      padding: 2px 8px;
+      color: var(--primary);
+      font-weight: 600;
+      font-size: 0.7rem;
+      display: flex;
+      align-items: center;
+      height: 20px;
+      position: absolute;
+      left: 170px;
+      width: 160px;
+      justify-content: center;
+      box-sizing: border-box;
+      overflow: hidden;
+      animation: animateSlot 8s infinite;
+    }
+
+    .bookmark-target-slot .slot-text {
+      animation: hideSlotText 8s infinite;
+    }
+
+    .bookmark-target-slot .added-bookmark {
+      position: absolute;
+      background: var(--primary);
+      color: white;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.7rem;
+      opacity: 0;
+      transform: scale(0.9);
+      animation: showAddedBookmark 8s infinite;
+    }
+
+    .mockup-body {
+      height: 140px;
+      position: relative;
+      background: #0f0c1b;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    /* Placeholder button in Body */
+    .mock-button-placeholder {
+      padding: 10px 20px;
+      border-radius: 30px;
+      background: rgba(138, 92, 245, 0.05);
+      border: 1px dashed rgba(138, 92, 245, 0.2);
+      color: rgba(255, 255, 255, 0.15);
+      font-weight: 700;
+      font-size: 0.9rem;
+      user-select: none;
+    }
+
+    /* Animated Button that gets dragged */
+    .animated-drag-button {
+      position: absolute;
+      padding: 8px 18px;
+      border-radius: 30px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: white;
+      font-weight: 700;
+      font-size: 0.8rem;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      user-select: none;
+      z-index: 10;
+      pointer-events: none;
+      animation: dragButton 8s infinite;
+    }
+
+    /* Animated Pointer Cursor */
+    .animated-cursor {
+      position: absolute;
+      z-index: 20;
+      pointer-events: none;
+      width: 20px;
+      height: 20px;
+      animation: moveCursor 8s infinite;
+    }
+
+    .animated-cursor svg {
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+    }
+
+    /* Click ripple animation helper */
+    .cursor-click-ripple {
+      position: absolute;
+      border: 2px solid var(--primary);
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      left: -5px;
+      top: -5px;
+      transform: scale(0);
+      opacity: 0;
+      animation: clickRipple 8s infinite;
+      pointer-events: none;
+    }
+
+    /* Instruction Steps styling */
     .instruction-steps {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 30px;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 25px;
       margin-top: 40px;
       text-align: left;
     }
 
     .step-card {
-      background: rgba(255, 255, 255, 0.02);
+      background: rgba(255, 255, 255, 0.015);
       border: 1px solid var(--card-border);
       border-radius: 16px;
       padding: 24px;
@@ -186,216 +366,41 @@
 
     .step-num {
       position: absolute;
-      top: -15px;
+      top: -14px;
       left: 20px;
       background: var(--primary);
       color: white;
-      width: 32px;
-      height: 32px;
+      width: 28px;
+      height: 28px;
       border-radius: 50%;
       display: flex;
       justify-content: center;
       align-items: center;
       font-weight: 800;
-      font-size: 0.95rem;
+      font-size: 0.85rem;
       border: 2px solid var(--bg);
-      box-shadow: 0 4px 10px rgba(108, 75, 145, 0.5);
+      box-shadow: 0 4px 8px rgba(138, 92, 245, 0.4);
     }
 
     .step-card h3 {
       margin-top: 5px;
-      margin-bottom: 10px;
-      font-size: 1.1rem;
+      margin-bottom: 8px;
+      font-size: 1.05rem;
       font-weight: 700;
       color: #fff;
     }
 
     .step-card p {
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       color: var(--text-muted);
     }
 
-    /* Live Sandbox / Interactive Demo Form */
-    .sandbox-section {
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid var(--card-border);
-      border-radius: 24px;
-      padding: 40px;
-      margin-bottom: 60px;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-    }
-
-    .sandbox-header {
-      margin-bottom: 30px;
-      border-bottom: 1px solid var(--card-border);
-      padding-bottom: 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 15px;
-    }
-
-    .sandbox-title h2 {
-      font-size: 1.75rem;
-      font-weight: 800;
-      color: white;
-    }
-
-    .sandbox-title p {
-      color: var(--text-muted);
-      font-size: 0.95rem;
-    }
-
-    /* Mock CRM Form styling */
-    .mock-crm {
-      background: #ffffff;
-      color: #333333;
-      border-radius: 16px;
-      padding: 25px;
-      box-shadow: 0 15px 30px rgba(0,0,0,0.15);
-      border: 4px solid #f0eaf5;
-      font-family: Arial, sans-serif;
-    }
-
-    .mock-crm-header {
-      border-bottom: 2px solid #6c4b91;
-      padding-bottom: 15px;
-      margin-bottom: 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .crm-logo {
-      font-weight: bold;
-      color: #6c4b91;
-      font-size: 1.2rem;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .crm-badge {
-      background: #e1d3ec;
-      color: #6c4b91;
-      font-size: 0.75rem;
-      font-weight: bold;
-      padding: 3px 8px;
-      border-radius: 4px;
-      text-transform: uppercase;
-    }
-
-    .grid-fields {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 15px;
-      margin-bottom: 20px;
-    }
-
-    .form-group {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-    }
-
-    .form-group label {
-      font-size: 0.8rem;
-      font-weight: bold;
-      color: #555555;
-      text-transform: uppercase;
-    }
-
-    .form-group input, .form-group select, .form-group textarea {
-      padding: 8px 12px;
-      border: 1px solid #cccccc;
-      border-radius: 6px;
-      font-size: 0.9rem;
-      font-family: Arial, sans-serif;
-      outline: none;
-      transition: border-color 0.2s;
-      background-color: #fafafa;
-    }
-
-    .form-group input:focus, .form-group select:focus {
-      border-color: #6c4b91;
-      background-color: #ffffff;
-    }
-
-    .row-span-2 {
-      grid-row: span 2;
-    }
-
-    .crm-items-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 15px;
-      margin-bottom: 20px;
-    }
-
-    .crm-items-table th {
-      background: #f4f6f8;
-      text-align: left;
-      padding: 8px 12px;
-      font-size: 0.8rem;
-      font-weight: bold;
-      text-transform: uppercase;
-      color: #555555;
-      border-bottom: 2px solid #dddddd;
-    }
-
-    .crm-items-table td {
-      padding: 6px;
-      border-bottom: 1px solid #eeeeee;
-    }
-
-    .crm-items-table input {
-      width: 100%;
-      padding: 6px 10px;
-      border: 1px solid #cccccc;
-      border-radius: 4px;
-      box-sizing: border-box;
-    }
-
-    .crm-actions {
-      display: flex;
-      justify-content: flex-end;
-      gap: 10px;
-      border-top: 1px solid #eeeeee;
-      padding-top: 15px;
-    }
-
-    .crm-btn {
-      padding: 10px 20px;
-      border-radius: 6px;
-      font-weight: bold;
-      cursor: pointer;
-      font-size: 0.9rem;
-      border: none;
-      transition: opacity 0.2s;
-    }
-
-    .crm-btn-primary {
-      background-color: #6c4b91;
-      color: white;
-    }
-
-    .crm-btn-secondary {
-      background-color: #e0e0e0;
-      color: #333;
-    }
-
-    .crm-btn:hover {
-      opacity: 0.9;
-    }
-
-    /* Tabs & Code Section */
+    /* Code Section */
     .code-section {
-      background: rgba(255, 255, 255, 0.01);
+      background: rgba(255, 255, 255, 0.005);
       border: 1px solid var(--card-border);
       border-radius: 24px;
-      padding: 40px;
+      padding: 30px 40px;
       animation: fadeInUp 0.8s ease-out;
     }
 
@@ -420,7 +425,7 @@
       border: none;
       color: var(--text-muted);
       padding: 8px 16px;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       font-weight: 600;
       cursor: pointer;
       border-radius: 8px;
@@ -428,13 +433,13 @@
     }
 
     .tab-btn.active {
-      background: rgba(108, 75, 145, 0.15);
+      background: rgba(138, 92, 245, 0.12);
       color: #fff;
-      border: 1px solid rgba(108, 75, 145, 0.3);
+      border: 1px solid rgba(138, 92, 245, 0.25);
     }
 
     .copy-btn {
-      background: rgba(255, 255, 255, 0.05);
+      background: rgba(255, 255, 255, 0.04);
       color: white;
       border: 1px solid var(--card-border);
       padding: 8px 16px;
@@ -449,8 +454,8 @@
     }
 
     .copy-btn:hover {
-      background: rgba(255, 255, 255, 0.1);
-      border-color: rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.18);
     }
 
     .code-container {
@@ -458,7 +463,7 @@
       border-radius: 16px;
       overflow: hidden;
       border: 1px solid var(--card-border);
-      background: #06040a;
+      background: #050408;
     }
 
     pre {
@@ -469,7 +474,7 @@
 
     code {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       color: #e2e8f0;
       display: block;
     }
@@ -505,27 +510,156 @@
       }
     }
 
-    @keyframes rotateGlow {
-      from {
-        transform: rotate(0deg);
+    /* Visual Tutorial dragging animation keyframes */
+    @keyframes moveCursor {
+      0% {
+        transform: translate(120px, 90px);
+        opacity: 1;
       }
-      to {
-        transform: rotate(360deg);
+      18% { /* Move to button */
+        transform: translate(0px, 35px);
+      }
+      22% { /* Click press */
+        transform: translate(0px, 35px) scale(0.8);
+      }
+      26% { /* Grab */
+        transform: translate(0px, 35px);
+      }
+      54% { /* Drag up to bookmarks target */
+        transform: translate(-30px, -76px);
+      }
+      58% { /* Click release / drop */
+        transform: translate(-30px, -76px) scale(0.8);
+      }
+      62% { /* Drop finished */
+        transform: translate(-30px, -76px);
+      }
+      75% { /* Move away */
+        transform: translate(120px, 90px);
+      }
+      100% {
+        transform: translate(120px, 90px);
+      }
+    }
+
+    @keyframes clickRipple {
+      0%, 21% {
+        transform: scale(0);
+        opacity: 0;
+      }
+      22% {
+        transform: scale(0.5);
+        opacity: 1;
+      }
+      25% {
+        transform: scale(2.2);
+        opacity: 0;
+      }
+      26%, 57% {
+        transform: scale(0);
+        opacity: 0;
+      }
+      58% {
+        transform: scale(0.5);
+        opacity: 1;
+      }
+      61% {
+        transform: scale(2.2);
+        opacity: 0;
+      }
+      62%, 100% {
+        transform: scale(0);
+        opacity: 0;
+      }
+    }
+
+    @keyframes dragButton {
+      0%, 21% {
+        transform: translate(0, 0);
+        opacity: 1;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      }
+      22% {
+        transform: translate(0, 0) scale(0.96);
+        opacity: 1;
+      }
+      26% {
+        transform: translate(0, 0) scale(1);
+        box-shadow: 0 10px 20px rgba(138, 92, 245, 0.4);
+        opacity: 0.95;
+      }
+      54% {
+        transform: translate(-30px, -111px) scale(0.65);
+        opacity: 0.15;
+      }
+      58%, 61% {
+        transform: translate(-30px, -111px) scale(0.65);
+        opacity: 0;
+      }
+      62% {
+        transform: translate(0, 0);
+        opacity: 0;
+      }
+      68%, 100% {
+        transform: translate(0, 0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes animateSlot {
+      0%, 53% {
+        border-color: rgba(138, 92, 245, 0.3);
+        background: transparent;
+      }
+      54% {
+        border-color: var(--primary);
+        background: rgba(138, 92, 245, 0.1);
+      }
+      55%, 85% {
+        border-color: var(--primary);
+        background: rgba(138, 92, 245, 0.2);
+        box-shadow: 0 0 8px rgba(138, 92, 245, 0.25);
+      }
+      90%, 100% {
+        border-color: rgba(138, 92, 245, 0.3);
+        background: transparent;
+        box-shadow: none;
+      }
+    }
+
+    @keyframes hideSlotText {
+      0%, 53% {
+        opacity: 0.7;
+      }
+      54%, 85% {
+        opacity: 0;
+      }
+      90%, 100% {
+        opacity: 0.7;
+      }
+    }
+
+    @keyframes showAddedBookmark {
+      0%, 53% {
+        opacity: 0;
+        transform: scale(0.85);
+      }
+      55%, 85% {
+        opacity: 1;
+        transform: scale(1);
+      }
+      90%, 100% {
+        opacity: 0;
+        transform: scale(0.85);
       }
     }
 
     @media (max-width: 768px) {
       h1 {
-        font-size: 2rem;
+        font-size: 2.2rem;
       }
-      .sandbox-section {
+      .code-section {
         padding: 20px;
-      }
-      .mock-crm {
-        padding: 15px;
-      }
-      .grid-fields {
-        grid-template-columns: 1fr;
       }
     }
   </style>
@@ -534,166 +668,87 @@
 
   <div class="container">
     <header>
-      <div class="logo-container">
-        <span class="badge">Velocity Bookmarklet</span>
-      </div>
-      <h1>Tlačový Asistent Servisu</h1>
-      <p>Šikovný skript pre prehliadač, ktorý okamžite vygeneruje čistý a optimalizovaný tlačový hárok zo servisného formulára CRM.</p>
+      <span class="badge">Velocity CRM Tool</span>
+      <h1>Service Print Assistant</h1>
+      <p>A smart browser bookmarklet that formats raw CRM order pages into beautifully structured, client-ready PDF receipts in one click.</p>
     </header>
 
-    <!-- Hero Installation Card -->
+    <!-- Main Installation Panel -->
     <section class="installer-box">
       <div class="installer-content">
-        <h2>Nainštalujte pretiahnutím</h2>
-        <p style="color: var(--text-muted); margin-bottom: 10px;">Chyťte tlačidlo nižšie myšou a presuňte ho na panel záložiek (Bookmarks bar) vo vašom prehliadači.</p>
+        <h2>Install by Dragging</h2>
+        <p style="color: var(--text-muted); margin-bottom: 20px;">Drag the button below and drop it straight onto your browser's Bookmarks Bar.</p>
         
         <!-- Draggable bookmarklet link -->
-        <a href="javascript:(function(){let%20orderNo=document.querySelector(%27input[name=%22cislo%22]%27)?.value%20||%20%27%27;let%20resNo=document.querySelector(%27input[name=%22cislo_rezervacie%22]%27)?.value%20||%20%27%27;let%20bike=document.querySelector(%27input[name=%22nazov_bike%22]%27)?.value%20||%20%27%27;let%20customer=document.getElementById(%27odberatel%27)?.value%20||%20%27%27;let%20infoText=document.getElementById(%27odberatel_info%27)?.innerText%20||%20%27%27;let%20phone=(infoText.match(/Telefon:\s*([\+\d\s]+)/)||[])[1]?.trim()||%20%27%27;let%20email=(infoText.match(/E-mail:\s*([^\s]+)/)||[])[1]?.trim()||%20%27%27;let%20stavSel=document.getElementById(%27id_stav%27);let%20isSpravene=stavSel%20&&%20stavSel.options[stavSel.selectedIndex].text===%27Spravené%27;let%20datumPrijatia=%60${document.getElementById(%27vyhotovenie_den%27)?.value%20||%20%27%27}.${document.getElementById(%27vyhotovenie_mesiac%27)?.value%20||%20%27%27}.${document.getElementById(%27vyhotovenie_rok%27)?.value%20||%20%27%27}%60;let%20datumOdovzdania=%60${document.getElementById(%27splatnost_den%27)?.value%20||%20%27%27}.${document.getElementById(%27splatnost_mesiac%27)?.value%20||%20%27%27}.${document.getElementById(%27splatnost_rok%27)?.value%20||%20%27%27}%60;let%20sumaZakaznik=document.getElementById(%27suma_zakaznik%27)?.value%20||%20%27%27;if(sumaZakaznik===%270%27%20||%20sumaZakaznik===%270.00%27%20||%20sumaZakaznik===%270,00%27){sumaZakaznik=%27%27;}let%20items=[];let%20estL=0;document.querySelectorAll(%27[id^=%22input_polozka_riadok_%22]%27).forEach(r=>{if(r.style.display!==%27none%27){let%20m=r.id.match(/_(\d+)$/);if(m){let%20i=m[1];let%20n=document.querySelector(%60input[name=%22polozka[${i}][nazov]%22]%60)?.value%20||%20%27%27;let%20ps=document.querySelector(%60input[name=%22polozka[${i}][cena_servis]%22]%60)?.value%20||%20%27%27;let%20pd=document.querySelector(%60input[name=%22polozka[${i}][cena_jed]%22]%60)?.value%20||%20%27%27;if(n.trim()||%20ps.trim()||%20pd.trim()){items.push({name:n,priceSrv:ps,priceDiely:pd});estL+=Math.max(1,Math.ceil(n.length/55));}}}});let%20sgl=estL>9%20||%20items.length>9;let%20tgL=sgl?Math.max(items.length,25):9;while(items.length<tgL){items.push({name:%27%27,priceSrv:%27%27,priceDiely:%27%27});}const%20gen=(s)=>%60<div%20style=%22display:flex;flex-direction:row;width:100%;height:${s?%2798vh%27:%2748vh%27};box-sizing:border-box;margin-bottom:0;${s?%27padding-bottom:1px;%27:%27%27}%22><div%20style=%22font-family:Arial,sans-serif;display:flex;flex-direction:column;flex-grow:1;height:100%;box-sizing:border-box;color:#000;border:2px%20solid%20#000;border-radius:12px;overflow:hidden;%22><table%20style=%22width:100%;height:100%;flex-grow:1;border-collapse:separate;border-spacing:0;table-layout:fixed;background:#fff;%22><colgroup><col%20style=%22width:42%;%22><col%20style=%22width:10%;%22><col%20style=%22width:10%;%22><col%20style=%22width:38%;%22></colgroup><!--Table%20Header(Logo%20&%20Shop%20Info+Ticket%20Number)--><tr><td%20colspan=%223%22%20style=%22border-right:1px%20solid%20#000;border-bottom:1px%20solid%20#000;padding:4px%2010px;background:#fdfdfd;%22><div%20style=%22display:flex;justify-content:space-between;align-items:center;%22><img%20src=%22https://www.procycling.sk/uploads/image_bank/logo-velocity-removebg-preview.png%22%20style=%22height:26px;width:110px;object-fit:contain;padding-left:2px;%22%20alt=%22Velocity%22><div%20style=%22text-align:center;font-size:10px;line-height:1.2;flex-grow:1;%22><strong%20style=%22font-size:11px;%22>Medveďovej%201/A,Bratislava-Petržalka</strong><br>0917%20344%20484%20&nbsp;|&nbsp;www.velocity.sk</div></div></td><td%20style=%22border-bottom:1px%20solid%20#000;padding:4px%2010px;background:#f0eaf5;%22><div%20style=%22display:flex;flex-direction:column;justify-content:center;height:100%;%22><div%20style=%22font-size:10px;font-weight:900;text-transform:uppercase;color:#555;margin-bottom:2px;%22>Servis%20č.:</div><div%20style=%22font-size:20px;font-weight:900;margin:0%200%202px%200;%22>${orderNo}</div><div%20style=%22font-size:9px;font-weight:bold;color:#666;%22>Rezervácia:${resNo?%60<span%20style=%22color:#FF0000;font-weight:900;font-size:11px;%22>${resNo}</span>%60:%27-%27}</div></div></td></tr><!--Bike%20Details%20&%20Sidebar%20Setup--><tr><td%20colspan=%223%22%20style=%22border-right:1px%20solid%20#000;border-bottom:1px%20solid%20#000;padding:8px%2010px;background:#fff;%22><div%20style=%22font-size:12px;font-weight:900;text-transform:uppercase;color:#222;letter-spacing:0.5px;margin-bottom:6px;text-align:center;%22>Potvrdenie%20o%20prebratí%20do%20servisu</div><div%20style=%22background:#f0eaf5;border:1px%20solid%20#d8cedf;border-radius:6px;padding:8px%2010px;%22><span%20style=%22font-size:12px;font-weight:900;color:#444;text-transform:uppercase;%22>NÁZOV:</span><span%20style=%22font-size:16px;font-weight:900;margin-left:6px;color:#000;%22>${bike}</span></div></td><!--Customer%20&%20Service%20Metadata%20Sidebar--><td%20rowspan=%22${3+items.length}%22%20style=%22padding:0;height:100%;vertical-align:top;background:#fafafa;%22><div%20style=%22display:flex;flex-direction:column;height:100%;padding:6px%208px;box-sizing:border-box;%22><!--Customer%20Panel--><div%20style=%22background:#f0eaf5;border:1px%20solid%20#d8cedf;border-radius:8px;padding:6px;margin-bottom:6px;%22><div%20style=%22font-size:10px;color:#555;font-weight:900;text-transform:uppercase;margin-bottom:2px;letter-spacing:0.5px;%22>Zákazník</div><div%20style=%22font-size:12px;line-height:1.3;color:#000;%22><b%20style=%22font-size:14px;font-weight:900;%22>${customer}</b><br><b%20style=%22font-weight:600;%22>${phone}</b><br><b%20style=%22font-weight:600;%22>${email}</b></div></div><!--Dates%20Panel--><div%20style=%22background:#f0eaf5;border:1px%20solid%20#d8cedf;border-radius:8px;padding:6px;margin-bottom:6px;%22><div%20style=%22font-size:10px;color:#555;font-weight:900;text-transform:uppercase;margin-bottom:2px;letter-spacing:0.5px;%22>Záznam</div><div%20style=%22font-size:12px;line-height:1.4;color:#000;%22><span%20style=%22color:#444;%22>Prijatie:</span><b%20style=%22font-weight:900;%22>${datumPrijatia}</b><br><span%20style=%22color:#444;%22>Predpokl.%20odovzdanie:</span><b%20style=%22font-weight:900;%22>${datumOdovzdania}</b></div><div%20style=%22margin-top:4px;padding:3px;background:#fff;border:1px%20solid%20#d8cedf;border-radius:4px;font-size:9px;color:#444;text-align:center;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:-0.1px;%22>O%20ukončení%20servisu%20informujeme%20cez<b>SMS</b>a<b>e-mail</b>.</div></div><!--Status%20Flag-->${isSpravene?%27<div%20style=%22border:2px%20solid%20#28a745;border-radius:6px;padding:4px;margin-bottom:6px;text-align:center;color:#28a745;font-weight:900;font-size:14px;background:#fff;text-transform:uppercase;letter-spacing:1px;box-sizing:border-box;%22>SPRAVENÉ</div>%27:%27%27}<!--Signatures--><div%20style=%22${s?%27margin-top:auto;height:85px;flex:none;%27:%27flex:1;%27}border:1px%20solid%20#bbb;border-radius:6px;background:#fff;padding:4px%208px;margin-bottom:6px;box-sizing:border-box;%22><div%20style=%22font-size:10px;font-weight:bold;color:#444;%22>Podpis%20zákazníka%20pri%20odovzdaní%20do%20servisu:</div></div><div%20style=%22${s?%27height:85px;flex:none;%27:%27flex:1;%27}border:1px%20solid%20#bbb;border-radius:6px;background:#fff;padding:4px%208px;box-sizing:border-box;%22><div%20style=%22font-size:10px;font-weight:bold;color:#444;%22>Podpis%20zákazníka%20pri%20prevzatí%20zo%20servisu:</div></div></div></td></tr><!--Table%20Column%20Headers--><tr><td%20style=%22border-right:1px%20solid%20#000;border-bottom:1px%20solid%20#000;padding:4px%208px;font-weight:bold;font-size:11px;background:#f4f6f8;text-transform:uppercase;color:#444;%22>Popis%20prác:</td><td%20style=%22border-right:1px%20solid%20#000;border-bottom:1px%20solid%20#000;padding:4px;text-align:center;font-weight:bold;font-size:11px;background:#f4f6f8;text-transform:uppercase;color:#444;%22>Servis%20v%20€</td><td%20style=%22border-right:1px%20solid%20#000;border-bottom:1px%20solid%20#000;padding:4px;text-align:center;font-weight:bold;font-size:11px;background:#f4f6f8;text-transform:uppercase;color:#444;%22>Náhr.%20diely%20v%20€</td></tr><!--Service%20Items%20Rows-->${items.map(item=>%60<tr><td%20style=%22border-right:1px%20solid%20#000;border-bottom:1px%20solid%20#000;padding:4px%208px;font-size:12px;%22>${item.name%20||%20%27&nbsp;%27}</td><td%20style=%22border-right:1px%20solid%20#000;border-bottom:1px%20solid%20#000;padding:4px;font-weight:600;font-size:12px;text-align:center;%22>${item.priceSrv%20||%20%27&nbsp;%27}</td><td%20style=%22border-right:1px%20solid%20#000;border-bottom:1px%20solid%20#000;padding:4px;font-weight:600;font-size:12px;text-align:center;%22>${item.priceDiely%20||%20%27&nbsp;%27}</td></tr>%60).join(%27%27)}<!--Total%20Price%20Footer--><tr><td%20style=%22border-right:1px%20solid%20#000;padding:8px%2010px;font-size:16px;font-weight:900;background:#fdfdfd;%22>SPOLU%20v%20EUR</td><td%20style=%22border-right:1px%20solid%20#000;padding:8px;text-align:center;font-size:16px;font-weight:900;background:#fdfdfd;%22>${sumaZakaznik%20||%20%27&nbsp;%27}</td><td%20style=%22border-right:1px%20solid%20#000;padding:8px;text-align:center;vertical-align:middle;background:#fdfdfd;%22>${resNo?%27<span%20style=%22color:#FF0000;font-weight:900;font-size:16px;letter-spacing:1px;%22>REZ</span>%27:%27%27}</td></tr></table></div><!--Right%20Sidebar%20Barcode%20Container(Printed%20vertically)--><div%20style=%22width:16px;flex-shrink:0;margin-left:6px;display:flex;flex-direction:column;justify-content:space-evenly;align-items:center;%22><img%20src=%22https://bwipjs-api.metafloor.com/?bcid=code128&text=${encodeURIComponent(orderNo)}&scale=2&height=6&includetext=false&rotate=R%22%20style=%22max-height:48%;max-width:16px;object-fit:contain;%22>${resNo?%60<img%20src=%22https://bwipjs-api.metafloor.com/?bcid=code128&text=${encodeURIComponent(resNo)}&scale=2&height=6&includetext=false&rotate=R%22%20style=%22max-height:48%;max-width:16px;object-fit:contain;%22>%60:%27%27}</div></div>%60;let%20overlay=document.getElementById(%27custom-print-overlay%27);if(!overlay){overlay=document.createElement(%27div%27);overlay.id=%27custom-print-overlay%27;document.body.appendChild(overlay);let%20style=document.createElement(%27style%27);style.innerHTML=%60%20@media%20print{@page{size:A4%20portrait;margin:8mm;}html,body{margin:0!important;padding:0!important;max-width:100%;background:#fff;font-family:Arial,sans-serif;}body>*:not(#custom-print-overlay){display:none!important;}#custom-print-overlay{display:flex!important;flex-direction:column;justify-content:space-between;position:relative;width:100%;min-height:100vh;background:#fff;padding:0;margin:0%20auto;box-sizing:border-box;}}@media%20screen{#custom-print-overlay{display:none!important;}}%60;document.head.appendChild(style);}overlay.innerHTML=sgl?gen(true):(gen(false)+%27<div%20style=%22width:100%;height:0;border-bottom:1px%20dashed%20#888;margin:0.5vh%200;%22></div>%27+gen(false));setTimeout(()=>window.print(),1500);})();" class="bookmarklet-btn" title="Presuňte na panel záložiek">
-          <svg viewBox="0 0 24 24">
-            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/>
-          </svg>
-          🖨️ Tlač Servisu Velocity
-        </a>
+        <div class="bookmarklet-btn-wrapper">
+          <a href="javascript:(function(){let%20orderNo=document.querySelector(%27input[name=%22cislo%22]%27)?.value%20||%20%27%27;let%20resNo=document.querySelector(%27input[name=%22cislo_rezervacie%22]%27)?.value%20||%20%27%27;let%20bike=document.querySelector(%27input[name=%22nazov_bike%22]%27)?.value%20||%20%27%27;let%20customer=document.getElementById(%27odberatel%27)?.value%20||%20%27%27;let%20infoText=document.getElementById(%27odberatel_info%27)?.innerText%20||%20%27%27;let%20phone=(infoText.match(/Telefon:\s*([\+\d\s]+)/)||[])[1]?.trim()||%20%27%27;let%20email=(infoText.match(/E-mail:\s*([^\s]+)/)||[])[1]?.trim()||%20%27%27;let%20stavSel=document.getElementById(%27id_stav%27);let%20isSpravene=stavSel%20&&%20stavSel.options[stavSel.selectedIndex].text===%27Spravené%27;let%20datumPrijatia=%60${document.getElementById(%27vyhotovenie_den%27)?.value%20||%20%27%27}.${document.getElementById(%27vyhotovenie_mesiac%27)?.value%20||%20%27%27}.${document.getElementById(%27vyhotovenie_rok%27)?.value%20||%20%27%27}%60;let%20datumOdovzdania=%60${document.getElementById(%27splatnost_den%27)?.value%20||%20%27%27}.${document.getElementById(%27splatnost_mesiac%27)?.value%20||%20%27%27}.${document.getElementById(%27splatnost_rok%27)?.value%20||%20%27%27}%60;let%20sumaZakaznik=document.getElementById(%27suma_zakaznik%27)?.value%20||%20%27%27;if(sumaZakaznik===%270%27%20||%20sumaZakaznik===%270.00%27%20||%20sumaZakaznik===%270,00%27){sumaZakaznik=%27%27;}let%20items=[];let%20estL=0;document.querySelectorAll(%27[id^=%22input_polozka_riadok_%22]%27).forEach(r=>{if(r.style.display!==%27none%27){let%20m=r.id.match(/_(\d+)$/);if(m){let%20i=m[1];let%20n=document.querySelector(%60input[name=%22polozka[${i}][nazov]%22]%60)?.value%20||%20%27%27;let%20ps=document.querySelector(%60input[name=%22polozka[${i}][cena_servis]%22]%60)?.value%20||%20%27%27;let%20pd=document.querySelector(%60input[name=%22polozka[${i}][cena_jed]%22]%60)?.value%20||%20%27%27;if(n.trim()||%20ps.trim()||%20pd.trim()){items.push({name:n,priceSrv:ps,priceDiely:pd});estL+=Math.max(1,Math.ceil(n.length/55));}}}});let%20sgl=estL>9%20||%20items.length>9;let%20tgL=sgl?Math.max(items.length,25):9;while(items.length<tgL){items.push({name:%27%27,priceSrv:%27%27,priceDiely:%27%27});}const%20gen=(s)=>%60<div%20style=%22display:flex;flex-direction:row;width:100%;height:${s?%2798vh%27:%2748vh%27};box-sizing:border-box;margin-bottom:0;${s?%27padding-bottom:1px;%27:%27%27}%22><div%20style=%22font-family:Arial,sans-serif;display:flex;flex-direction:column;flex-grow:1;height:100%;box-sizing:border-box;color:#000;border:2px%20solid%20#000;border-radius:12px;overflow:hidden;%22><table%20style=%22width:100%;height:100%;flex-grow:1;border-collapse:separate;border-spacing:0;table-layout:fixed;background:#fff;%22><colgroup><col%20style=%22width:42%;%22><col%20style=%22width:10%;%22><col%20style=%22width:10%;%22><col%20style=%22width:38%;%22></colgroup><!--Table%20Header(Logo%20&%20Shop%20Info+Ticket%20Number)--><tr><td%20colspan=%223%22%20style=%22border-right:1px%20solid%20#000;border-bottom:1px%20solid%20#000;padding:4px%2010px;background:#fdfdfd;%22><div%20style=%22display:flex;justify-content:space-between;align-items:center;%22><img%20src=%22https://www.procycling.sk/uploads/image_bank/logo-velocity-removebg-preview.png%22%20style=%22height:26px;width:110px;object-fit:contain;padding-left:2px;%22%20alt=%22Velocity%22><div%20style=%22text-align:center;font-size:10px;line-height:1.2;flex-grow:1;%22><strong%20style=%22font-size:11px;%22>Medveďovej%201/A,Bratislava-Petržalka</strong><br>0917%20344%20484%20&nbsp;|&nbsp;www.velocity.sk</div></div></td><td%20style=%22border-bottom:1px%20solid%20#000;padding:4px%2010px;background:#f0eaf5;%22><div%20style=%22display:flex;flex-direction:column;justify-content:center;height:100%;%22><div%20style=%22font-size:10px;font-weight:900;text-transform:uppercase;color:#555;margin-bottom:2px;%22>Servis%20č.:</div><div%20style=%22font-size:20px;font-weight:900;margin:0%200%202px%200;%22>${orderNo}</div><div%20style=%22font-size:9px;font-weight:bold;color:#666;%22>Rezervácia:${resNo?%60<span%20style=%22color:#FF0000;font-weight:900;font-size:11px;%22>${resNo}</span>%60:%27-%27}</div></div></td></tr><!--Bike%20Details%20&%20Sidebar%20Setup--><tr><td%20colspan=%223%22%20style=%22border-right:1px%20solid%20#000;border-bottom:1px%20solid%20#000;padding:8px%2010px;background:#fff;%22><div%20style=%22font-size:12px;font-weight:900;text-transform:uppercase;color:#222;letter-spacing:0.5px;margin-bottom:6px;text-align:center;%22>Potvrdenie%20o%20prebratí%20do%20servisu</div><div%20style=%22background:#f0eaf5;border:1px%20solid%20#d8cedf;border-radius:6px;padding:8px%2010px;%22><span%20style=%22font-size:12px;font-weight:900;color:#444;text-transform:uppercase;%22>NÁZOV:</span><span%20style=%22font-size:16px;font-weight:900;margin-left:6px;color:#000;%22>${bike}</span></div></td><!--Customer%20&%20Service%20Metadata%20Sidebar--><td%20rowspan=%22${3+items.length}%22%20style=%22padding:0;height:100%;vertical-align:top;background:#fafafa;%22><div%20style=%22display:flex;flex-direction:column;height:100%;padding:6px%208px;box-sizing:border-box;%22><!--Customer%20Panel--><div%20style=%22background:#f0eaf5;border:1px%20solid%20#d8cedf;border-radius:8px;padding:6px;margin-bottom:6px;%22><div%20style=%22font-size:10px;color:#555;font-weight:900;text-transform:uppercase;margin-bottom:2px;letter-spacing:0.5px;%22>Zákazník</div><div%20style=%22font-size:12px;line-height:1.3;color:#000;%22><b%20style=%22font-size:14px;font-weight:900;%22>${customer}</b><br><b%20style=%22font-weight:600;%22>${phone}</b><br><b%20style=%22font-weight:600;%22>${email}</b></div></div><!--Dates%20Panel--><div%20style=%22background:#f0eaf5;border:1px%20solid%20#d8cedf;border-radius:8px;padding:6px;margin-bottom:6px;%22><div%20style=%22font-size:10px;color:#555;font-weight:900;text-transform:uppercase;margin-bottom:2px;letter-spacing:0.5px;%22>Záznam</div><div%20style=%22font-size:12px;line-height:1.4;color:#000;%22><span%20style=%22color:#444;%22>Prijatie:</span><b%20style=%22font-weight:900;%22>${datumPrijatia}</b><br><span%20style=%22color:#444;%22>Predpokl.%20odovzdanie:</span><b%20style=%22font-weight:900;%22>${datumOdovzdania}</b></div><div%20style=%22margin-top:4px;padding:3px;background:#fff;border:1px%20solid%20#d8cedf;border-radius:4px;font-size:9px;color:#444;text-align:center;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:-0.1px;%22>O%20ukončení%20servisu%20informujeme%20cez<b>SMS</b>a<b>e-mail</b>.</div></div><!--Status%20Flag-->${isSpravene?%27<div%20style=%22border:2px%20solid%20#28a745;border-radius:6px;padding:4px;margin-bottom:6px;text-align:center;color:#28a745;font-weight:900;font-size:14px;background:#fff;text-transform:uppercase;letter-spacing:1px;box-sizing:border-box;%22>SPRAVENÉ</div>%27:%27%27}<!--Signatures--><div%20style=%22${s?%27margin-top:auto;height:85px;flex:none;%27:%27flex:1;%27}border:1px%20solid%20#bbb;border-radius:6px;background:#fff;padding:4px%208px;margin-bottom:6px;box-sizing:border-box;%22><div%20style=%22font-size:10px;font-weight:bold;color:#444;%22>Podpis%20zákazníka%20pri%20odovzdaní%20do%20servisu:</div></div><div%20style=%22${s?%27height:85px;flex:none;%27:%27flex:1;%27}border:1px%20solid%20#bbb;border-radius:6px;background:#fff;padding:4px%208px;box-sizing:border-box;%22><div%20style=%22font-size:10px;font-weight:bold;color:#444;%22>Podpis%20zákazníka%20pri%20prevzatí%20zo%20servisu:</div></div></div></td></tr><!--Table%20Column%20Headers--><tr><td%20style=%22border-right:1px%20solid%20#000;border-bottom:1px%20solid%20#000;padding:4px%208px;font-weight:bold;font-size:11px;background:#f4f6f8;text-transform:uppercase;color:#444;%22>Popis%20prác:</td><td%20style=%22border-right:1px%20solid%20#000;border-bottom:1px%20solid%20#000;padding:4px;text-align:center;font-weight:bold;font-size:11px;background:#f4f6f8;text-transform:uppercase;color:#444;%22>Servis%20v%20€</td><td%20style=%22border-right:1px%20solid%20#000;border-bottom:1px%20solid%20#000;padding:4px;text-align:center;font-weight:bold;font-size:11px;background:#f4f6f8;text-transform:uppercase;color:#444;%22>Náhr.%20diely%20v%20€</td></tr><!--Service%20Items%20Rows-->${items.map(item=>%60<tr><td%20style=%22border-right:1px%20solid%20#000;border-bottom:1px%20solid%20#000;padding:4px%208px;font-size:12px;%22>${item.name%20||%20%27&nbsp;%27}</td><td%20style=%22border-right:1px%20solid%20#000;border-bottom:1px%20solid%20#000;padding:4px;font-weight:600;font-size:12px;text-align:center;%22>${item.priceSrv%20||%20%27&nbsp;%27}</td><td%20style=%22border-right:1px%20solid%20#000;border-bottom:1px%20solid%20#000;padding:4px;font-weight:600;font-size:12px;text-align:center;%22>${item.priceDiely%20||%20%27&nbsp;%27}</td></tr>%60).join(%27%27)}<!--Total%20Price%20Footer--><tr><td%20style=%22border-right:1px%20solid%20#000;padding:8px%2010px;font-size:16px;font-weight:900;background:#fdfdfd;%22>SPOLU%20v%20EUR</td><td%20style=%22border-right:1px%20solid%20#000;padding:8px;text-align:center;font-size:16px;font-weight:900;background:#fdfdfd;%22>${sumaZakaznik%20||%20%27&nbsp;%27}</td><td%20style=%22border-right:1px%20solid%20#000;padding:8px;text-align:center;vertical-align:middle;background:#fdfdfd;%22>${resNo?%27<span%20style=%22color:#FF0000;font-weight:900;font-size:16px;letter-spacing:1px;%22>REZ</span>%27:%27%27}</td></tr></table></div><!--Right%20Sidebar%20Barcode%20Container(Printed%20vertically)--><div%20style=%22width:16px;flex-shrink:0;margin-left:6px;display:flex;flex-direction:column;justify-content:space-evenly;align-items:center;%22><img%20src=%22https://bwipjs-api.metafloor.com/?bcid=code128&text=${encodeURIComponent(orderNo)}&scale=2&height=6&includetext=false&rotate=R%22%20style=%22max-height:48%;max-width:16px;object-fit:contain;%22>${resNo?%60<img%20src=%22https://bwipjs-api.metafloor.com/?bcid=code128&text=${encodeURIComponent(resNo)}&scale=2&height=6&includetext=false&rotate=R%22%20style=%22max-height:48%;max-width:16px;object-fit:contain;%22>%60:%27%27}</div></div>%60;let%20overlay=document.getElementById(%27custom-print-overlay%27);if(!overlay){overlay=document.createElement(%27div%27);overlay.id=%27custom-print-overlay%27;document.body.appendChild(overlay);let%20style=document.createElement(%27style%27);style.innerHTML=%60%20@media%20print{@page{size:A4%20portrait;margin:8mm;}html,body{margin:0!important;padding:0!important;max-width:100%;background:#fff;font-family:Arial,sans-serif;}body>*:not(#custom-print-overlay){display:none!important;}#custom-print-overlay{display:flex!important;flex-direction:column;justify-content:space-between;position:relative;width:100%;min-height:100vh;background:#fff;padding:0;margin:0%20auto;box-sizing:border-box;}}@media%20screen{#custom-print-overlay{display:none!important;}}%60;document.head.appendChild(style);}overlay.innerHTML=sgl?gen(true):(gen(false)+%27<div%20style=%22width:100%;height:0;border-bottom:1px%20dashed%20#888;margin:0.5vh%200;%22></div>%27+gen(false));setTimeout(()=>window.print(),1500);})();" class="bookmarklet-btn" title="Drag to bookmarks bar">
+            <svg viewBox="0 0 24 24">
+              <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+            </svg>
+            🖨️ Tlač Servisu Velocity
+          </a>
+          <div class="drag-hint">
+            <svg viewBox="0 0 24 24"><path d="M8 5a2 2 0 100 4 2 2 0 000-4zm8 0a2 2 0 100 4 2 2 0 000-4zm-8 6a2 2 0 100 4 2 2 0 000-4zm8 0a2 2 0 100 4 2 2 0 000-4zm-8 6a2 2 0 100 4 2 2 0 000-4zm8 0a2 2 0 100 4 2 2 0 000-4z"/></svg>
+            Drag me up!
+          </div>
+        </div>
 
+        <!-- Drag & Drop Visual Tutorial Mockup -->
+        <div class="animation-container">
+          <div class="browser-header">
+            <div class="window-controls">
+              <span class="control-dot red"></span>
+              <span class="control-dot yellow"></span>
+              <span class="control-dot green"></span>
+            </div>
+            <div class="address-bar">
+              <svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6z"/></svg>
+              velocity.sk/crm/order-details/4089
+            </div>
+          </div>
+          <div class="bookmarks-bar">
+            <span class="bookmark-item">📁 CRM</span>
+            <span class="bookmark-item">📁 Analytics</span>
+            
+            <!-- Animated Target Box -->
+            <div class="bookmark-target-slot">
+              <span class="slot-text">➕ Drop Here</span>
+              <span class="added-bookmark">⭐ Tlač Servisu Velocity</span>
+            </div>
+          </div>
+          <div class="mockup-body">
+            <div class="mock-button-placeholder">🖨️ Tlač Servisu Velocity</div>
+            
+            <!-- Absolute Animated Elements -->
+            <div class="animated-drag-button">🖨️ Tlač Servisu Velocity</div>
+            
+            <div class="animated-cursor">
+              <div class="cursor-click-ripple"></div>
+              <!-- Cursor Arrow SVG -->
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4.5 3V19.5L9.75 14.25H16.5L4.5 3Z" fill="white" stroke="#222" stroke-width="2" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Clarified Steps -->
         <div class="instruction-steps">
           <div class="step-card">
             <div class="step-num">1</div>
-            <h3>Zobrazte panel záložiek</h3>
-            <p>Stlačte <code>Ctrl+Shift+B</code> (Windows) alebo <code>Cmd+Shift+B</code> (Mac) na aktiváciu panelu záložiek v Chrome/Edge/Firefox.</p>
+            <h3>Show Bookmarks Bar</h3>
+            <p>Ensure your browser's bookmarks bar is visible. Toggle with <code>Ctrl+Shift+B</code> (Windows) or <code>Cmd+Shift+B</code> (Mac).</p>
           </div>
           <div class="step-card">
             <div class="step-num">2</div>
-            <h3>Presuňte tlačidlo</h3>
-            <p>Kliknite a podržte fialové tlačidlo vyššie a presuňte ho priamo na lištu záložiek.</p>
+            <h3>Drag & Drop</h3>
+            <p>Drag the purple button above to your bookmarks bar. You can drop it anywhere on the bar.</p>
           </div>
           <div class="step-card">
             <div class="step-num">3</div>
-            <h3>Použite v CRM</h3>
-            <p>Keď ste na detaile servisnej zákazky v CRM, kliknite na záložku <strong>🖨️ Tlač Servisu Velocity</strong> a otvorí sa dialóg tlače.</p>
+            <h3>Open CRM & Click</h3>
+            <p>Go to your CRM service card detail and click the new <strong>🖨️ Tlač Servisu Velocity</strong> bookmark. The print dialog will open.</p>
           </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Sandbox Section for Testing -->
-    <section class="sandbox-section">
-      <div class="sandbox-header">
-        <div class="sandbox-title">
-          <h2>Vyskúšajte si to priamo tu</h2>
-          <p>Tento formulár verne simuluje štruktúru reálneho CRM systému. Vyplňte dáta a kliknite na nainštalovaný bookmarklet.</p>
-        </div>
-        <span style="background: rgba(46, 213, 115, 0.1); color: var(--success); font-size: 0.85rem; font-weight: bold; padding: 6px 12px; border-radius: 8px; border: 1px solid rgba(46, 213, 115, 0.2);">
-          ✓ Testovacie prostredie pripravené
-        </span>
-      </div>
-
-      <!-- Mock CRM Form -->
-      <div class="mock-crm">
-        <div class="mock-crm-header">
-          <div class="crm-logo">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            Velocity CRM System v2.4
-          </div>
-          <div class="crm-badge">Detail zákazky</div>
-        </div>
-
-        <div class="grid-fields">
-          <div class="form-group">
-            <label>Číslo servisu</label>
-            <input type="text" name="cislo" value="SRV-2026-4089">
-          </div>
-          <div class="form-group">
-            <label>Číslo rezervácie</label>
-            <input type="text" name="cislo_rezervacie" value="REZ-9921">
-          </div>
-          <div class="form-group">
-            <label>Názov bicykla</label>
-            <input type="text" name="nazov_bike" value="Specialized Epic EVO Comp L Carbon">
-          </div>
-          <div class="form-group">
-            <label>Stav zákazky</label>
-            <select id="id_stav">
-              <option value="1">Prijatý</option>
-              <option value="2">V procese</option>
-              <option value="3" selected>Spravené</option>
-              <option value="4">Odovzdaný</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="grid-fields">
-          <div class="form-group">
-            <label>Odberateľ (Meno)</label>
-            <input type="text" id="odberatel" value="František Novák">
-          </div>
-          <div class="form-group row-span-2">
-            <label>Odberateľ Info</label>
-            <textarea id="odberatel_info" style="height: 100px; resize: none; padding: 8px; border: 1px solid #ccc; border-radius: 6px; font-size: 0.9rem;" readonly>Meno: František Novák
-Telefon: +421 905 123 456
-E-mail: frantisek.novak@example.com
-Adresa: Hlavná 42, Bratislava</textarea>
-          </div>
-          <div class="form-group">
-            <label>Dátum Prijatia</label>
-            <div style="display: flex; gap: 5px;">
-              <input type="text" id="vyhotovenie_den" value="28" style="width: 33%; text-align: center;">
-              <input type="text" id="vyhotovenie_mesiac" value="05" style="width: 33%; text-align: center;">
-              <input type="text" id="vyhotovenie_rok" value="2026" style="width: 34%; text-align: center;">
-            </div>
-          </div>
-        </div>
-
-        <div class="grid-fields">
-          <div class="form-group">
-            <label>Predpokladané odovzdanie</label>
-            <div style="display: flex; gap: 5px;">
-              <input type="text" id="splatnost_den" value="02" style="width: 33%; text-align: center;">
-              <input type="text" id="splatnost_mesiac" value="06" style="width: 33%; text-align: center;">
-              <input type="text" id="splatnost_rok" value="2026" style="width: 34%; text-align: center;">
-            </div>
-          </div>
-          <div class="form-group">
-            <label>Celková suma zákazníka (€)</label>
-            <input type="text" id="suma_zakaznik" value="125.00">
-          </div>
-        </div>
-
-        <h4 style="margin-top: 25px; margin-bottom: 10px; font-size: 0.9rem; text-transform: uppercase; color: #555;">Položky zákazky</h4>
-        <table class="crm-items-table">
-          <thead>
-            <tr>
-              <th style="width: 50%;">Názov položky / popis práce</th>
-              <th style="width: 25%;">Servis (€)</th>
-              <th style="width: 25%;">Diely (€)</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr id="input_polozka_riadok_1">
-              <td><input type="text" name="polozka[1][nazov]" value="Garančná prehliadka - Centráž, dotiahnutie spojov"></td>
-              <td><input type="text" name="polozka[1][cena_servis]" value="45.00" style="text-align: center;"></td>
-              <td><input type="text" name="polozka[1][cena_jed]" value="0.00" style="text-align: center;"></td>
-            </tr>
-            <tr id="input_polozka_riadok_2">
-              <td><input type="text" name="polozka[2][nazov]" value="Výmena reťaze Shimano XT 12-speed"></td>
-              <td><input type="text" name="polozka[2][cena_servis]" value="15.00" style="text-align: center;"></td>
-              <td><input type="text" name="polozka[2][cena_jed]" value="38.00" style="text-align: center;"></td>
-            </tr>
-            <tr id="input_polozka_riadok_3">
-              <td><input type="text" name="polozka[3][nazov]" value="Výmena brzdových platničiek organické - predné"></td>
-              <td><input type="text" name="polozka[3][cena_servis]" value="10.00" style="text-align: center;"></td>
-              <td><input type="text" name="polozka[3][cena_jed]" value="17.00" style="text-align: center;"></td>
-            </tr>
-            <tr id="input_polozka_riadok_4" style="display: none;">
-              <td><input type="text" name="polozka[4][nazov]" value=""></td>
-              <td><input type="text" name="polozka[4][cena_servis]" value="" style="text-align: center;"></td>
-              <td><input type="text" name="polozka[4][cena_jed]" value="" style="text-align: center;"></td>
-            </tr>
-          </tbody>
-        </table>
-
-        <div class="crm-actions">
-          <button type="button" class="crm-btn crm-btn-secondary" onclick="alert('Toto je len maketa pre otestovanie bookmarkletu. Formulár netreba ukladať, stačí naň kliknúť záložkou z lišty.')">Uložiť v CRM</button>
-          <button type="button" class="crm-btn crm-btn-primary" onclick="alert('Spustite bookmarklet z lišty záložiek pre otestovanie tlače!')">Spustiť Tlač (Bookmarklet)</button>
         </div>
       </div>
     </section>
@@ -702,12 +757,12 @@ Adresa: Hlavná 42, Bratislava</textarea>
     <section class="code-section">
       <div class="tabs-header">
         <div class="tabs-btn-group">
-          <button class="tab-btn active" onclick="switchTab('minified')">Minifikovaný kód (Bookmarklet)</button>
-          <button class="tab-btn" onclick="switchTab('source')">Zdrojový kód (src/bookmarklet.js)</button>
+          <button class="tab-btn active" onclick="switchTab('minified')">Minified Code (Bookmarklet)</button>
+          <button class="tab-btn" onclick="switchTab('source')">Source Code (bookmarklet.js)</button>
         </div>
         <button class="copy-btn" id="copy-btn" onclick="copyCode()">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-          Kopírovať kód
+          Copy Code
         </button>
       </div>
 
@@ -993,7 +1048,7 @@ Adresa: Hlavná 42, Bratislava</textarea>
         const originalText = copyBtn.innerHTML;
         copyBtn.innerHTML = `
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-          Skopírované!
+          Copied!
         `;
         copyBtn.style.borderColor = 'var(--success)';
         copyBtn.style.color = 'var(--success)';
@@ -1001,7 +1056,7 @@ Adresa: Hlavná 42, Bratislava</textarea>
         setTimeout(() => {
           copyBtn.innerHTML = originalText;
           copyBtn.style.borderColor = 'var(--card-border)';
-          copyBtn.style.color = '#white';
+          copyBtn.style.color = 'white';
         }, 2000);
       });
     }

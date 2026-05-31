@@ -1,91 +1,86 @@
 # 🖨️ Velocity Service Printing Bookmarklet
 
-**Velocity Service Printing Bookmarklet** — це зручний та швидкий інструмент (букмарклет) для браузера, призначений для миттєвого створення та друку професійно оформлених підтверджень про прийом велосипедів у сервіс компанії **Velocity**.
+**Velocity Service Printing Bookmarklet** is a browser-based tool designed to generate clean, print-optimized confirmation sheets directly from the **Velocity** CRM/service order page.
 
-Він зчитує необхідні дані безпосередньо з активної сторінки вашої CRM-системи, автоматично форматує їх відповідно до фірмового стилю сервісу та генерує друковану форму з лінійними штрих-кодами.
-
----
-
-## ✨ Основні можливості
-
-*   **Автоматичний збір даних:** Зчитує номер замовлення, номер резервації, модель велосипеда, контакти клієнта (автоматично виокремлює телефон та E-mail), статус, дати прийняття та запланованого виконання, а також загальну вартість.
-*   **Інтелектуальне форматування списку робіт:**
-    *   Зчитує всі додані позиції послуг та запчастин з їхніми цінами.
-    *   Якщо позицій **9 або менше**, скрипт автоматично оптимізує висоту та генерує **дві копії на одному аркуші A4** (розділені пунктирною лінією для розрізання — одна копія для майстерні, інша для клієнта).
-    *   Якщо позицій **більше 9** (або опис робіт надто довгий), скрипт перемикається в режим **однієї великої форми на весь аркуш A4**.
-*   **Динамічне генерація штрих-кодів:** Використовує безкоштовний API `bwip-js` для генерації вертикальних штрих-кодів Code 128 (для номера замовлення та номера резервації).
-*   **Адаптивний друк:** Повністю приховує інтерфейс CRM під час друку, показуючи лише чистий фірмовий бланк, адаптований під формат сторінки A4.
-*   **Автономність:** Працює безпосередньо у вашому браузері без необхідності встановлення додаткових розширень чи програм.
+It extracts order details from the CRM DOM, styles them according to the Velocity service sheet design guidelines, and triggers the print dialog with linear barcodes for order and reservation numbers.
 
 ---
 
-## 🚀 Встановлення
+## ✨ Features
 
-Найпростіший спосіб встановити букмарклет — скористатися нашою інтерактивною сторінкою встановлення:
-
-1.  Завантажте репозиторій або відкрийте файл [index.html](file:///c:/Users/buloc/OneDrive/Рабочий стол/bookmarklets/index.html) у вашому браузері.
-2.  Переконайтеся, що у вашому браузері увімкнено панель закладок (`Ctrl + Shift + B` або `Cmd + Shift + B`).
-3.  **Перетягніть мишкою** кнопку **`🖨️ Тlač Servisu Velocity`** безпосередньо на панель закладок.
-
-### Альтернативний (ручний) спосіб:
-1.  Створіть нову закладку в браузері.
-2.  Назвіть її, наприклад, `🖨️ Друк Velocity`.
-3.  Скопіюйте весь вміст файлу [dist/bookmarklet.url.txt](file:///c:/Users/buloc/OneDrive/Рабочий стол/bookmarklets/dist/bookmarklet.url.txt) (рядок починається з `javascript:`).
-4.  Вставте скопійований код у поле **URL (Адреса)** створеної закладки та збережіть.
+*   **Automated Data Extraction:** Parses order numbers, reservation numbers, bike models, customer information (separates phone and email from the info text block), order status, intake/expected delivery dates, and total prices.
+*   **Dynamic Layout Selection:**
+    *   **Double Ticket (Default):** For orders with **9 or fewer items**, it renders **two identical copies on a single A4 page** separated by a dashed cut-line (one copy for the workshop, one for the customer).
+    *   **Single Ticket (Large Orders):** For orders with **more than 9 items** (or long descriptions), it automatically expands the height to fill a **single full-size A4 page**.
+*   **On-the-Fly Barcodes:** Integrates with the free `bwip-js` API to generate Code 128 vertical barcodes for both the order number and reservation number.
+*   **Print-Optimized Styles:** Leverages CSS `@media print` rules to hide CRM headers, sidebars, and inputs, rendering only the clean customer ticket.
+*   **Client-Side Execution:** Lightweight, offline-ready, and works in any modern browser without installing browser extensions.
 
 ---
 
-## 🛠️ Як користуватися
+## 🚀 Installation
 
-1.  Відкрийте сторінку деталей сервісної картки/замовлення у вашому CRM-інтерфейсі.
-2.  Натисніть на закладку **`🖨️ Тlač Servisu Velocity`** на панелі закладок вашого браузера.
-3.  Зачекайте 1.5 секунди (скрипт завантажує зображення штрих-кодів) — автоматично відкриється системне вікно друку.
-4.  У налаштуваннях друку виберіть:
-    *   **Цільовий принтер** (або зберегти в PDF)
-    *   **Розмір паперу:** A4
-    *   **Орієнтація:** Книжкова (Portrait)
-    *   **Поля (Margins):** Мінімум або Без полів (для найкращого вигляду рекомендується виставити `None` або `Default`)
-    *   **Фонові малюнки (Background graphics):** Увімкнено (обов'язково для відображення фонових кольорів бланка).
-5.  Натисніть **Друк**.
+The recommended way to install the bookmarklet is using the compiled [GitHub Pages website](https://Bulochkq.github.io/bookmarklets/) or opening the [index.html](file:///c:/Users/buloc/OneDrive/Рабочий стол/bookmarklets/index.html) file locally in your browser:
+
+1.  Show your browser's Bookmarks Bar:
+    *   **Windows:** `Ctrl + Shift + B`
+    *   **Mac:** `Cmd + Shift + B`
+2.  **Drag and drop** the purple **`🖨️ Tlač Servisu Velocity`** button directly onto your Bookmarks Bar.
+
+### Manual Installation
+1.  Create a new bookmark in your browser.
+2.  Name it `🖨️ Print Velocity`.
+3.  Copy the entire content of [dist/bookmarklet.url.txt](file:///c:/Users/buloc/OneDrive/Рабочий стол/bookmarklets/dist/bookmarklet.url.txt) (the string starting with `javascript:`).
+4.  Paste it into the **URL / Address** field of the bookmark and save.
 
 ---
 
-## 📂 Структура проєкту
+## 🛠️ How to Use
+
+1.  Open the service ticket or order details page in your CRM.
+2.  Click the **`🖨️ Tlač Servisu Velocity`** bookmark in your Bookmarks Bar.
+3.  Wait 1.5 seconds for the barcode images to fetch and load.
+4.  The system Print Dialog will open automatically. Configure the settings:
+    *   **Destination:** Choose your printer or Save as PDF.
+    *   **Paper Size:** A4
+    *   **Orientation:** Portrait
+    *   **Margins:** None or Default (for optimal alignment).
+    *   **Background graphics:** **Enabled** (critical to render table colors and borders).
+5.  Click **Print**.
+
+---
+
+## 📂 Project Structure
 
 ```text
 bookmarklets/
 ├── src/
-│   ├── bookmarklet.js          # Зрозумілий, форматизований код із коментарями
-│   └── index.template.html     # Шаблон сторінки встановлення та тестування
+│   ├── bookmarklet.js          # Well-formatted source code with comments
+│   └── index.template.html     # Website installer template
 ├── dist/
-│   ├── bookmarklet.min.js      # Стиснутий (мініфікований) JavaScript-код
-│   └── bookmarklet.url.txt     # Готовий закодований рядок для закладок (javascript:...)
-├── index.html                  # Згенерована сторінка встановлення (інтерактивна пісочниця)
-├── build.js                    # Скрипт збирання проєкту (компілятор)
-└── README.md                   # Цей файл документації
+│   ├── bookmarklet.min.js      # Minified and compressed Javascript code
+│   └── bookmarklet.url.txt     # URL-encoded bookmarklet link string (javascript:...)
+├── index.html                  # Compiled interactive web installer
+├── build.js                    # Node.js builder/compiler script
+├── .gitignore                  # Git ignore file for OS and IDE files
+└── README.md                   # Project documentation
 ```
 
 ---
 
-## 💻 Розробка та збирання
+## 💻 Development & Building
 
-Якщо вам потрібно внести зміни до логіки роботи або стилю бланка:
+If you need to adjust styling, logo paths, or parsing logic:
 
-1.  Редагуйте виключно вихідний файл [src/bookmarklet.js](file:///c:/Users/buloc/OneDrive/Рабочий стол/bookmarklets/src/bookmarklet.js) або шаблон сторінки встановлення [src/index.template.html](file:///c:/Users/buloc/OneDrive/Рабочий стол/bookmarklets/src/index.template.html).
-2.  Запустіть процес збирання, щоб оновити мініфіковану версію та сторінку встановлення:
+1.  Modify the source files in `src/`:
+    *   [src/bookmarklet.js](file:///c:/Users/buloc/OneDrive/Рабочий стол/bookmarklets/src/bookmarklet.js) (script logic)
+    *   [src/index.template.html](file:///c:/Users/buloc/OneDrive/Рабочий стол/bookmarklets/src/index.template.html) (web UI)
+2.  Rebuild the project:
     ```bash
     node build.js
     ```
-3.  Компілятор автоматично:
-    *   Видалить зайві коментарі та пробіли.
-    *   Стисне код.
-    *   Закодує символи для безпечного використання в URL.
-    *   Оновлює файл `index.html` із новим кодом та інтерактивним прев'ю.
-
----
-
-## 🎨 Технічні деталі шаблону бланка
-
-*   **Шрифти:** Використовує системний шрифт `Arial, sans-serif` для максимальної сумісності та швидкості відображення при друці.
-*   **Друк штрих-кодів:** Здійснюється через HTTP API `bwip-js` з типом штрих-коду `code128`, згенерований штрих-код повертається під кутом 90 градусів (`rotate=R`) та друкується вертикально на правому березі аркуша.
-*   **Стилі сторінки друку:** Використовує CSS-директиву `@media print` та `@page { size: A4 portrait; margin: 8mm; }`, яка тимчасово приховує решту елементів CRM-сторінки (`body > *:not(#custom-print-overlay) { display: none !important; }`), забезпечуючи ідеальний результат без сміття на папері.
+3.  The compiler will:
+    *   Strip comments and format whitespaces.
+    *   Create a minified javascript asset.
+    *   URL-encode the JS code.
+    *   Inject the code into `index.html`.
