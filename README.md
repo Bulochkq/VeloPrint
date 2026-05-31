@@ -1,6 +1,6 @@
-# 🖨️ Velocity Service Printing Bookmarklet
+# 🖨️ VeloPrint — Velocity Service Printing Bookmarklet
 
-**Velocity Service Printing Bookmarklet** is a browser-based tool designed to generate clean, print-optimized confirmation sheets directly from the **Velocity** CRM/service order page.
+**VeloPrint** is a browser-based tool designed to generate clean, print-optimized confirmation sheets directly from the **Velocity** CRM/service order page.
 
 It extracts order details from the CRM DOM, styles them according to the Velocity service sheet design guidelines, and triggers the print dialog with linear barcodes for order and reservation numbers.
 
@@ -20,7 +20,7 @@ It extracts order details from the CRM DOM, styles them according to the Velocit
 
 ## 🚀 Installation
 
-The recommended way to install the bookmarklet is using the compiled [GitHub Pages website](https://Bulochkq.github.io/bookmarklets/) or opening the [index.html](file:///c:/Users/buloc/OneDrive/Рабочий стол/bookmarklets/index.html) file locally in your browser:
+The recommended way to install the bookmarklet is using the compiled [GitHub Pages website](https://bulochkq.github.io/VeloPrint/) or opening the [index.html](file:///c:/Users/buloc/OneDrive/Рабочий стол/bookmarklets/index.html) file locally in your browser:
 
 1.  Show your browser's Bookmarks Bar:
     *   **Windows:** `Ctrl + Shift + B`
@@ -53,7 +53,7 @@ The recommended way to install the bookmarklet is using the compiled [GitHub Pag
 ## 📂 Project Structure
 
 ```text
-bookmarklets/
+VeloPrint/
 ├── src/
 │   ├── bookmarklet.js          # Well-formatted source code with comments
 │   └── index.template.html     # Website installer template
