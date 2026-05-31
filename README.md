@@ -20,8 +20,7 @@ It extracts order details from the CRM DOM, styles them according to the Velocit
 
 ## 🚀 Installation
 
-The recommended way to install the bookmarklet is using the compiled [GitHub Pages website](https://bulochkq.github.io/VeloPrint/) or opening the [index.html](file:///c:/Users/buloc/OneDrive/Рабочий стол/bookmarklets/index.html) file locally in your browser:
-
+The recommended way to install the bookmarklet is using the compiled [GitHub Pages website](https://bulochkq.github.io/VeloPrint/)
 1.  Show your browser's Bookmarks Bar:
     *   **Windows:** `Ctrl + Shift + B`
     *   **Mac:** `Cmd + Shift + B`
